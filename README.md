@@ -1,6 +1,6 @@
 # love_pic
 
-A new Flutter application.
+A flutter android application which can be use to search the require images and also give the feature to download it through this app.
 
 ## Getting Started
 
