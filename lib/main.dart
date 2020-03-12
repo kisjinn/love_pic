@@ -12,6 +12,7 @@ void maun(){
 
 
 class FirstPage  extends StatelessWidget {
+  var _categoryNameController = new TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,6 +25,15 @@ class FirstPage  extends StatelessWidget {
               new Image.asset('images/download.png',
               width: 200.0,
               height: 200.0),
+              new ListTile(
+                title: new TextFormField(
+                  controller: _categoryNameController,
+                  decoration: new InputDecoration(
+                    labelText: 'Enter a Category',
+                    hintText: 'eg: dogs,bikes,cats',
+                  ),
+                ),
+              )
 
 
             ],
