@@ -8,7 +8,7 @@ import 'package:http/http.dart';
 void maun() {
   runApp(new MaterialApp(
     debugShowCheckedModeBanner: false,
-    home: FirstPage(),
+    home: SecondPage(),
   ));
 }
 
@@ -67,3 +67,23 @@ class FirstPage extends StatelessWidget {
     );
   }
 }
+
+class SecondPage extends StatefulWidget {
+  @override
+  __SecondPageState createState() => __SecondPageState();
+}
+
+class __SecondPageState extends State<SecondPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.blue,
+        title: Text('Photo Bay',
+        style: TextStyle(color: Colors.white),),
+        centerTitle: true,
+      ),
+    );
+  }
+}
+
