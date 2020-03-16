@@ -3,7 +3,7 @@ import 'source.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:async';
 import 'dart:convert';
-import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
 
 void maun() {
   runApp(new MaterialApp(
@@ -54,8 +54,9 @@ class FirstPage extends StatelessWidget {
                     child: Text(
                       'Search',
                       style: TextStyle(
-                          fontSize: 22.0, fontWeight: FontWeight.bold,
-                      color: Colors.white),
+                          fontSize: 22.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
                     ),
                   ),
                 ),
@@ -79,11 +80,54 @@ class __SecondPageState extends State<SecondPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
-        title: Text('Photo Bay',
-        style: TextStyle(color: Colors.white),),
+        title: Text(
+          'Photo Bay',
+          style: TextStyle(color: Colors.white),
+        ),
         centerTitle: true,
       ),
+      body: new FutureBuilder(
+          future: getPics(),
+          builder: (context, snapshot) {
+            Map data = snapshot.data;
+            if (snapshot.hasError) {
+              print(snapshot.error);
+              return Text(
+                'Failed to get response from server',
+                style: TextStyle(color: Colors.red, fontSize: 22.0),
+              );
+            } else if (snapshot.hasData) {
+              return new Center(
+                child: new ListView.builder(
+                    itemCount: data.length,
+                    itemBuilder: (context, index) {
+                      return new Column(
+                        children: <Widget>[
+
+                          new Container(
+                            child: new InkWell(
+                              onTap: (){},
+                              child: new Image.network(
+                                '${data['hits'][index]['largeImageURL']}'
+                              ),
+                            ),
+                          ),
+                          new Padding(padding: const EdgeInsets.all(5.0)),
+                        ],
+                      );
+                    }),
+              );
+            }else  if(!snapshot.hasData){
+              return new Center(child: CircularProgressIndicator(),);
+            }
+          }),
     );
   }
 }
 
+Future<Map> getPics() async {
+  String url =
+      'https://pixabay.com/api/?key=$ApiKey&q=yellow+flowers&image_type=photo&pretty=true';
+  http.Response response = await http.get(url);
+  return json.decode(response.body);
+}
